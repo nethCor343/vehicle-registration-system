@@ -6,10 +6,12 @@ public class Car extends Vehicle {
     private static final float MAX_SPEED = 500.0f; 
 
     private float maxSpeed;
+    private FuelType fuelType;
 
-    public Car(String plate, String brand, String model, String color, float maxSpeed) {
+    public Car(String plate, String brand, String model, String color, float maxSpeed, FuelType fuelType) {
         super(plate, brand, model, color);
         setMaxSpeed(maxSpeed);
+        setFuelType(fuelType); 
 
     }
 
@@ -23,8 +25,19 @@ public class Car extends Vehicle {
         this.maxSpeed = maxSpeed;
     }
 
+    public void setFuelType(FuelType fuelType) {
+        if (fuelType == null) {
+            throw new IllegalArgumentException("FuelType cannot be null.");
+        }
+        this.fuelType = fuelType;
+    }
+
     public float getMaxSpeed() {
         return maxSpeed;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
     }
 
 }
