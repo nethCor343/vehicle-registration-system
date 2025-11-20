@@ -56,6 +56,24 @@ public abstract class Vehicle {
         }
         this.plate = plate;
     }
+    
+    private String validateText(int minCharacters, int maxCharacters, String text, String fieldName) {   
+        
+        if (text == null || text.isBlank()) {
+            throw new IllegalArgumentException(fieldName + " cannot be null or empty");
+        }
+        
+        text = text.trim();
+        int length = text.length();
+        
+        if (length < minCharacters || length > maxCharacters) {
+            throw new IllegalArgumentException(
+                fieldName + " must be between " + minCharacters + " and " + maxCharacters +
+                " characters");
+        }
+
+        return text;
+    }
 
     public String getPlate() {
         return plate;
