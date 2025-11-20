@@ -42,5 +42,12 @@ public class Truck  extends Vehicle {
     public double getCargoCapacity() {
         return cargoCapacity;
     }
-    
+
+    @Override
+    public String toString() {
+        return super.toString() + 
+               "\nHorse Power: " + horsePower + " hp" +
+               "\nCargo Capacity: " + cargoCapacity + " tons";
+    }
+
 }
