@@ -113,4 +113,11 @@ public abstract class Vehicle {
         return color;
     }
 
+    public String toString() {
+        return "Plate: " + plate + "\n" +
+               "Brand: " + brand + "\n" +
+               "Model: " + model + "\n" +
+               "Color: " + color;
+    }
+
 }
