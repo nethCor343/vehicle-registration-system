@@ -39,4 +39,11 @@ public class Motorcycle extends Vehicle{
         return fuelType;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + 
+               "\nFuel Type: " + fuelType + 
+               "\nEngine Cylinders: " + engineCylinders;
+    }
+
 }
