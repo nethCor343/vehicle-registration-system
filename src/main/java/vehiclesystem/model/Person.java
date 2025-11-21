@@ -13,12 +13,16 @@ public class Person {
     private String idNumber;
 
     public Person(String firstName, String paternalSurname, String maternalSurname, String idNumber) {
+        setFirstName(firstName);
+        setPaternalSurname(paternalSurname);
+        setMaternalSurname(maternalSurname);
+        setIdNumber(idNumber);
 
     }
 
     private String validateText(int minCharacters, int maxCharacters, String text, String fieldName) {
         if (text == null || text.isBlank()) {
-            throw new IllegalArgumentException(text + " cannot be null or empty");
+            throw new IllegalArgumentException(fieldName + " cannot be null or empty");
         }
         
         text = text.trim();
@@ -28,11 +32,43 @@ public class Person {
         
         if (length < minCharacters || length > maxCharacters) {
             throw new IllegalArgumentException(
-                text + " must be between " + minCharacters + " and " + maxCharacters +
+                fieldName + " must be between " + minCharacters + " and " + maxCharacters +
                 " characters");
         }
 
         return text;
+    }
+
+    private void setFirstName(String firstName) {
+        this.firstName = validateText(NAME_MIN_LEN, NAME_MAX_LEN, firstName, "First Name");
+    }
+
+    private void setPaternalSurname(String paternalSurname) {
+        this.paternalSurname = validateText(NAME_MIN_LEN, NAME_MAX_LEN, paternalSurname, "Paternal Surname");
+    }
+
+    private void setMaternalSurname(String maternalSurname) {
+        this.maternalSurname = validateText(NAME_MIN_LEN, NAME_MAX_LEN, maternalSurname, "Maternal Surname");
+    }
+
+    private void setIdNumber(String idNumber) {
+        this.idNumber = validateText(ID_MIN_LEN, ID_MAX_LEN, idNumber, "ID Number");
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getPaternalSurname() {
+        return paternalSurname;
+    }
+
+    public String getMaternalSurname() {
+        return maternalSurname;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
     }
 
 }
