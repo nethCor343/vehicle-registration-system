@@ -64,8 +64,13 @@ public class Car extends Vehicle {
             return this;
         }
 
-        protected float getMaxSpeedValue() { return maxSpeed; }
-        protected FuelType getFuelTypeValue() { return fuelType; }
+        protected float getMaxSpeedValue() {
+            return maxSpeed;
+        }
+
+        protected FuelType getFuelTypeValue() {
+            return fuelType;
+        }
 
         @Override
         protected CarBuilder self() {
