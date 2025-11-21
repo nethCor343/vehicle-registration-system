@@ -8,11 +8,14 @@ public class Car extends Vehicle {
     private float maxSpeed;
     private FuelType fuelType;
 
-    public Car(String plate, String brand, String model, String color, float maxSpeed, FuelType fuelType) {
-        super(plate, brand, model, color);
-        setMaxSpeed(maxSpeed);
-        setFuelType(fuelType); 
+    private Car(CarBuilder builder) {
+        super(builder);
+        setMaxSpeed(builder.getMaxSpeedValue());
+        setFuelType(builder.getFuelTypeValue()); 
+    }
 
+    public static CarBuilder builder(String plate, String brand) {
+        return new CarBuilder(plate, brand);
     }
 
     private void setMaxSpeed(float maxSpeed) {
@@ -32,13 +35,8 @@ public class Car extends Vehicle {
         this.fuelType = fuelType;
     }
 
-    public float getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    public FuelType getFuelType() {
-        return fuelType;
-    }
+    public float getMaxSpeed() { return maxSpeed; }
+    public FuelType getFuelType() { return fuelType; }
 
     @Override
     public String toString() {
@@ -47,4 +45,36 @@ public class Car extends Vehicle {
                "\nMax Speed: " + maxSpeed + " km/h";
     }
 
+    public static class CarBuilder extends VehicleBuilder<CarBuilder> {
+        
+        private float maxSpeed = 100.0f;
+        private FuelType fuelType = FuelType.GASOLINE;
+
+        public CarBuilder(String plate, String brand) {
+            super(plate, brand);
+        }
+
+        public CarBuilder maxSpeed(float maxSpeed) {
+            this.maxSpeed = maxSpeed;
+            return this;
+        }
+
+        public CarBuilder fuelType(FuelType fuelType) {
+            this.fuelType = fuelType;
+            return this;
+        }
+
+        protected float getMaxSpeedValue() { return maxSpeed; }
+        protected FuelType getFuelTypeValue() { return fuelType; }
+
+        @Override
+        protected CarBuilder self() {
+            return this;
+        }
+
+        @Override
+        public Car build() {
+            return new Car(this);
+        }
+    }
 }
