@@ -71,4 +71,12 @@ public class Person {
         return idNumber;
     }
 
+    @Override
+    public String toString() {
+        return "First Name: " + firstName + "\n" +
+               "Paternal Surname: " + paternalSurname + "\n" +
+               "Maternal Surname: " + maternalSurname + "\n" +
+               "ID Number: " + idNumber;
+    }
+    
 }
