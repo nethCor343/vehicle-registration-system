@@ -12,30 +12,32 @@ public class Person {
     private String maternalSurname;
     private String idNumber;
 
-    public Person(String firstName, String paternalSurname, String maternalSurname, String idNumber) {
-        setFirstName(firstName);
-        setPaternalSurname(paternalSurname);
-        setMaternalSurname(maternalSurname);
-        setIdNumber(idNumber);
+    private Person(PersonBuilder builder) {
+        setIdNumber(builder.idNumber);
+        setFirstName(builder.firstName);
+        setPaternalSurname(builder.paternalSurname);
+        setMaternalSurname(builder.maternalSurname);
+    }
 
+    public static PersonBuilder builder(String idNumber, String firstName) {
+        return new PersonBuilder(idNumber, firstName);
     }
 
     private String validateText(int minCharacters, int maxCharacters, String text, String fieldName) {
         if (text == null || text.isBlank()) {
             throw new IllegalArgumentException(fieldName + " cannot be null or empty");
         }
-        
+
         text = text.trim();
         text = text.toUpperCase();
-
+        
         int length = text.length();
         
         if (length < minCharacters || length > maxCharacters) {
             throw new IllegalArgumentException(
-                fieldName + " must be between " + minCharacters + " and " + maxCharacters +
-                " characters");
+                fieldName + " must be between " + minCharacters + " and " + maxCharacters + " characters");
         }
-
+        
         return text;
     }
 
@@ -44,11 +46,13 @@ public class Person {
     }
 
     private void setPaternalSurname(String paternalSurname) {
-        this.paternalSurname = validateText(NAME_MIN_LEN, NAME_MAX_LEN, paternalSurname, "Paternal Surname");
+        this.paternalSurname = validateText(NAME_MIN_LEN, NAME_MAX_LEN,
+            paternalSurname, "Paternal Surname");
     }
 
     private void setMaternalSurname(String maternalSurname) {
-        this.maternalSurname = validateText(NAME_MIN_LEN, NAME_MAX_LEN, maternalSurname, "Maternal Surname");
+        this.maternalSurname = validateText(NAME_MIN_LEN, NAME_MAX_LEN,
+            maternalSurname, "Maternal Surname");
     }
 
     private void setIdNumber(String idNumber) {
@@ -62,7 +66,7 @@ public class Person {
     public String getPaternalSurname() {
         return paternalSurname;
     }
-
+    
     public String getMaternalSurname() {
         return maternalSurname;
     }
@@ -78,5 +82,32 @@ public class Person {
                "Maternal Surname: " + maternalSurname + "\n" +
                "ID Number: " + idNumber;
     }
-    
+
+    public static class PersonBuilder {
+        
+        private final String firstName;
+        private final String idNumber;
+
+        private String paternalSurname = "XXXX"; 
+        private String maternalSurname = "XXXX";
+
+        public PersonBuilder(String idNumber, String firstName) {
+            this.idNumber = idNumber;
+            this.firstName = firstName;
+        }
+
+        public PersonBuilder paternalSurname(String paternalSurname) {
+            this.paternalSurname = paternalSurname;
+            return this;
+        }
+
+        public PersonBuilder maternalSurname(String maternalSurname) {
+            this.maternalSurname = maternalSurname;
+            return this;
+        }
+
+        public Person build() {
+            return new Person(this);
+        }
+    }
 }
