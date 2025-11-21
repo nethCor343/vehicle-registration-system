@@ -1,6 +1,6 @@
 package vehiclesystem.model;
 
-public class Truck  extends Vehicle {
+public class Truck extends Vehicle {
 
     private static final int MIN_HP = 90;
     private static final int MAX_HP = 450;
@@ -10,10 +10,14 @@ public class Truck  extends Vehicle {
     private int horsePower;
     private double cargoCapacity;
 
-    public Truck(String plate, String brand, String model, String color, int horsePower, double cargoCapacity) {
-        super(plate, brand, model, color);
-        setHorsePower(horsePower);
-        setCargoCapacity(cargoCapacity);
+    private Truck(TruckBuilder builder) {
+        super(builder);
+        setHorsePower(builder.getHorsePowerValue());
+        setCargoCapacity(builder.getCargoCapacityValue());
+    }
+
+    public static TruckBuilder builder(String plate, String brand) {
+        return new TruckBuilder(plate, brand);
     }
 
     private void setHorsePower(int horsePower) {
@@ -22,6 +26,7 @@ public class Truck  extends Vehicle {
                 "HorsePower (" + horsePower + ") must be between " + MIN_HP + " and " + MAX_HP + "."
             );
         }
+
         this.horsePower = horsePower;
     }
 
@@ -32,6 +37,7 @@ public class Truck  extends Vehicle {
                 " and " + MAX_CAPACITY + " tons."
             );
         }
+
         this.cargoCapacity = cargoCapacity;
     }
 
@@ -48,6 +54,44 @@ public class Truck  extends Vehicle {
         return super.toString() + 
                "\nHorse Power: " + horsePower + " hp" +
                "\nCargo Capacity: " + cargoCapacity + " tons";
+    }
+
+    public static class TruckBuilder extends VehicleBuilder<TruckBuilder> {
+
+        private int horsePower = 90; 
+        private double cargoCapacity = 0.5;
+
+        public TruckBuilder(String plate, String brand) {
+            super(plate, brand);
+        }
+
+        public TruckBuilder horsePower(int horsePower) {
+            this.horsePower = horsePower;
+            return this;
+        }
+
+        public TruckBuilder cargoCapacity(double cargoCapacity) {
+            this.cargoCapacity = cargoCapacity;
+            return this;
+        }
+
+        protected int getHorsePowerValue() {
+            return horsePower; 
+        }
+
+        protected double getCargoCapacityValue() {
+            return cargoCapacity;
+        }
+
+        @Override
+        protected TruckBuilder self() {
+            return this;
+        }
+
+        @Override
+        public Truck build() {
+            return new Truck(this);
+        }
     }
 
 }

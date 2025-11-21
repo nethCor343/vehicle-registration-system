@@ -35,8 +35,13 @@ public class Car extends Vehicle {
         this.fuelType = fuelType;
     }
 
-    public float getMaxSpeed() { return maxSpeed; }
-    public FuelType getFuelType() { return fuelType; }
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
 
     @Override
     public String toString() {

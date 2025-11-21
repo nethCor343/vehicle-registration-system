@@ -18,11 +18,11 @@ public abstract class Vehicle {
     private String model;
     private String color;
     
-    public Vehicle(String plate, String brand, String model, String color) {
-        setPlate(plate);
-        setBrand(brand);
-        setModel(model);
-        setColor(color);
+    protected Vehicle(VehicleBuilder<?> builder) {
+        setPlate(builder.plate);
+        setBrand(builder.brand);
+        setModel(builder.model);
+        setColor(builder.color);
     }
 
     private void setPlate(String plate) {
@@ -64,6 +64,7 @@ public abstract class Vehicle {
                 );
             }
         }
+        
         this.plate = plate;
     }
     
@@ -118,6 +119,33 @@ public abstract class Vehicle {
                "Brand: " + brand + "\n" +
                "Model: " + model + "\n" +
                "Color: " + color;
+    }
+
+    public abstract static class VehicleBuilder<T extends VehicleBuilder<T>> {
+        
+        private final String plate;
+        private final String brand;
+
+        private String model = "XXXX"; 
+        private String color = "XXXX";    
+
+        public VehicleBuilder(String plate, String brand) {
+            this.plate = plate;
+            this.brand = brand;
+        }
+
+        public T model(String model) {
+            this.model = model;
+            return self();
+        }
+
+        public T color(String color) {
+            this.color = color;
+            return self();
+        }
+
+        protected abstract T self();
+        public abstract Vehicle build();
     }
 
 }
